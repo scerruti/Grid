@@ -3,6 +3,8 @@ import java.awt.*;
 public class Segment {
     private final int x1, y1, x2, y2;
     private Color color = Color.black;
+    private static Stroke thick = null;
+    private static Stroke normal;
 
     public Segment(Point p1, Point p2) {
         x1 = p1.x * Grid.CELL_SIZE + Grid.CELL_SIZE/2 + Grid.GRID_LEFT_OFFSET;
@@ -20,8 +22,15 @@ public class Segment {
     }
 
     public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        if (thick == null) {
+            normal = g2.getStroke();
+            thick = new BasicStroke(3);
+        }
         g.setColor(color);
+        g2.setStroke(thick);
         g.drawLine(x1, y1, x2, y2);
+        g2.setStroke(normal);
     }
 
     public void setOptimal() {

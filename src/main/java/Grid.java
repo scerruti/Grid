@@ -1,6 +1,9 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 public class Grid extends JFrame {
 
@@ -9,27 +12,28 @@ public class Grid extends JFrame {
     public static final int CELL_SIZE = 24;
     public static final int GRID_LEFT_OFFSET = CELL_SIZE;
     public static final int GRID_TOP_OFFSET = (int) (CELL_SIZE * 0.75);
-    public static final int GRID_JUNCTION_RADIUS = CELL_SIZE / 6;
+    public static final int GRID_JUNCTION_SIZE = CELL_SIZE / 4;
 
     private static final Grid instance = new Grid();
 
     private final ArrayList<Component> components = new ArrayList<>();
+    private final Canvas canvas;
 
     private Grid()
     {
         super("Grid");
 
         // create a empty canvas
-        Canvas c = new Canvas() {
+        canvas = new Canvas() {
             public void paint(Graphics g) {
                 components.forEach(component -> component.paint(g));
             }
         };
 
         // set background
-        c.setBackground(Color.white);
+        canvas.setBackground(Color.white);
 
-        add(c);
+        add(canvas);
 
         int width = (GRID_WIDTH + 2) * CELL_SIZE;
         int height = (int) ((GRID_HEIGHT + 1.5) * CELL_SIZE) + 20;
@@ -58,7 +62,7 @@ public class Grid extends JFrame {
         path.add(new Point(3, 6));
         path.add(new Point(7, 6));
         path.add(new Point(7, 4));
-        grid.addPath(path, false);
+        grid.addPath(path);
 
         path = new ArrayList<>();
         path.add(new Point(3, 2));
@@ -72,6 +76,8 @@ public class Grid extends JFrame {
         grid.addIntersection(2, 3);
 
         grid.setVisible(true);
+        grid.saveImage();
+
     }
 
     public void addTerminator(int row, int column) {
@@ -98,4 +104,16 @@ public class Grid extends JFrame {
         components.add(new Path(path, optimal));
     }
 
+    public void saveImage() {
+        BufferedImage image=new BufferedImage(canvas.getWidth(), canvas.getHeight(),BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D g2=(Graphics2D)image.getGraphics();
+
+        canvas.paint(g2);
+        try {
+            ImageIO.write(image, "png", new File("/tmp/canvas.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
