@@ -1,3 +1,5 @@
+package com.otabi.Grid;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,21 +9,21 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 public class Grid extends JFrame {
 
-    public static final int GRID_WIDTH = 24;
-    public static final int GRID_HEIGHT = 16;
+    public static int GRID_WIDTH = 24;
+    public static int GRID_HEIGHT = 16;
     public static final int CELL_SIZE = 24;
     public static final int GRID_LEFT_OFFSET = CELL_SIZE;
     public static final int GRID_TOP_OFFSET = (int) (CELL_SIZE * 0.75);
     public static final int GRID_JUNCTION_SIZE = CELL_SIZE / 4;
 
-    private static final Grid instance = new Grid();
+    private static Grid instance;
 
     private final ArrayList<Component> components = new ArrayList<>();
     private final Canvas canvas;
 
     private Grid()
     {
-        super("Grid");
+        super("com.otabi.Grid.Grid");
 
         // create a empty canvas
         canvas = new Canvas() {
@@ -47,13 +49,22 @@ public class Grid extends JFrame {
     }
 
     public static Grid getInstance() {
+        if (instance == null) {
+            instance = new Grid();
+        }
         return instance;
+    }
+
+    public static Grid getInstance(int width, int height) {
+        GRID_WIDTH = width;
+        GRID_HEIGHT = height;
+        return getInstance();
     }
 
     // Main Method
     public static void main(String[] args)
     {
-        Grid grid = Grid.getInstance();
+        Grid grid = Grid.getInstance(10, 10);
 
         ArrayList<Point> path = new ArrayList<>();
         path.add(new Point(0,0));
@@ -109,7 +120,9 @@ public class Grid extends JFrame {
 
         Graphics2D g2=(Graphics2D)image.getGraphics();
 
+        g2.setBackground(Color.white);
         canvas.paint(g2);
+
         try {
             ImageIO.write(image, "png", new File("/tmp/canvas.png"));
         } catch (Exception e) {

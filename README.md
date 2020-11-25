@@ -1,8 +1,8 @@
-# Grid
+# com.otabi.Grid.Grid
 ---
 This little Java program will allow you to draw maze solutions using a Java Canvas.
 * The grid will handle all conversions between grid space and canvas space. 
-* The dimensions are currently hardcoded in Grid.
+* The dimensions are currently hardcoded in com.otabi.Grid.Grid.
 * The background color of each cell is set automatically based upon the paths.
 * The path color can be changed for the optimal path.
 
@@ -12,15 +12,15 @@ Please let me know what changes you need.
 
 The main contains the example grid.
 
-1. Get the ```Grid``` singleton
+1. Get the ```com.otabi.Grid.Grid``` singleton, getInstance can optionally take a width and height parameter.
 1. Add paths, each is an ```ArrayList``` of ```java.awt.Point```. You can also tell the system to mark the optimal path with a different color.
 1. Mark the starting and ending points by adding terminators.
 1. Mark the junctions by adding intersections.
 1. Set it visible
 
-You should be able to output it to a file easily enough.
+You can use saveImage to write the output to ```/tmp/canvas.png```.
 ```java
-        Grid grid = Grid.getInstance();
+        com.otabi.Grid.Grid grid = com.otabi.Grid.Grid.getInstance();
 
         ArrayList<Point> path = new ArrayList<>();
         path.add(new Point(0,0));

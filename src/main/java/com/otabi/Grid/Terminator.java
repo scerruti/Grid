@@ -1,3 +1,5 @@
+package com.otabi.Grid;
+
 import java.awt.*;
 
 public class Terminator extends Junction {
