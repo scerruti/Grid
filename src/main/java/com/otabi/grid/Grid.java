@@ -1,4 +1,4 @@
-package com.otabi.Grid;
+package com.otabi.grid;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ public class Grid extends JFrame {
 
     public static int GRID_WIDTH = 24;
     public static int GRID_HEIGHT = 16;
-    public static final int CELL_SIZE = 24;
+    public static final int CELL_SIZE = 48;
     public static final int GRID_LEFT_OFFSET = CELL_SIZE;
     public static final int GRID_TOP_OFFSET = (int) (CELL_SIZE * 0.75);
     public static final int GRID_JUNCTION_SIZE = CELL_SIZE / 4;
@@ -81,10 +81,9 @@ public class Grid extends JFrame {
         path.add(new Point(7, 4));
         grid.addPath(path, true);
 
-        grid.addTerminator(0, 0);
-        grid.addTerminator(4, 7);
-
-        grid.addIntersection(2, 3);
+        grid.addIntersection(0, 0, 0);
+        grid.addIntersection(1, 4, 7);
+        grid.addIntersection(3, 2, 3);
 
         grid.setVisible(true);
         grid.saveImage();
@@ -95,8 +94,8 @@ public class Grid extends JFrame {
         components.add(new Terminator(row, column));
     }
 
-    public void addIntersection(int row, int column) {
-        components.add(new Intersection(row, column));
+    public void addIntersection(int number, int row, int column) {
+        components.add(new Intersection(number, row, column));
     }
 
     public Optional<Cell> getCell(int column, int row) {

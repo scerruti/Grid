@@ -1,4 +1,4 @@
-package com.otabi.Grid;
+package com.otabi.grid;
 
 import java.awt.*;
 

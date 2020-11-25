@@ -1,9 +1,9 @@
-package com.otabi.Grid;
+package com.otabi.grid;
 
 import java.awt.*;
 
-public class Intersection extends Junction {
-    public Intersection(int row, int column) {
+public class Terminator extends Junction {
+    public Terminator(int row, int column) {
         super(row, column);
     }
 
@@ -15,9 +15,9 @@ public class Intersection extends Junction {
             thick = new BasicStroke(2);
         }
 
-        g2.setStroke(thick);
         g.setColor(Color.black);
-        g.drawRect(x, y, Grid.GRID_JUNCTION_SIZE * 2, Grid.GRID_JUNCTION_SIZE * 2);
+        g2.setStroke(thick);
+        g.drawOval(x, y, Grid.GRID_JUNCTION_SIZE * 2, Grid.GRID_JUNCTION_SIZE * 2);
         g2.setStroke(normal);
     }
 }
