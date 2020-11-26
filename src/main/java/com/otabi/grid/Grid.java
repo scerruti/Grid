@@ -114,13 +114,20 @@ public class Grid extends JFrame {
         components.add(new Path(path, optimal));
     }
 
-    public void saveImage() {
-        BufferedImage image=new BufferedImage(canvas.getWidth(), canvas.getHeight(),BufferedImage.TYPE_INT_RGB);
+    public BufferedImage toImage() {
+        BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-        Graphics2D g2=(Graphics2D)image.getGraphics();
+        Graphics2D g2 = (Graphics2D) image.getGraphics();
 
-        g2.setBackground(Color.white);
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, image.getWidth(), image.getHeight());
         canvas.paint(g2);
+
+        return image;
+    }
+
+    public void saveImage() {
+        BufferedImage image = toImage();
 
         try {
             ImageIO.write(image, "png", new File("/tmp/canvas.png"));
